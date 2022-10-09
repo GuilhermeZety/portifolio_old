@@ -13,7 +13,7 @@ ThemeData CustomTheme = ThemeData(
       elevation: 7,
     ),    
     primaryColor: const Color(0xFF575ddb),
-    secondaryHeaderColor: const Color(0xFFD6D6D6),
+    secondaryHeaderColor: const Color(0xFFC1C1C1),
     canvasColor: const Color(0xFFAAAAAA),
     backgroundColor: const Color(0xFF161818),     
     cardColor: const Color(0xFF20203F),          

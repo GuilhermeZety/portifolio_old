@@ -7,7 +7,6 @@ class TabBarVertical extends StatefulWidget {
     required this.height,
     required this.constraints,
     required this.tabWidth,
-    required this.length,
     required this.tabs,
     required this.items,
   });
@@ -16,7 +15,6 @@ class TabBarVertical extends StatefulWidget {
   final double height;
   final BoxConstraints constraints;
   final double tabWidth;
-  final int length;
   final List<String> tabs;
   final List<Widget> items;
 
@@ -45,7 +43,7 @@ class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProvid
 
     
     controller.forward();
-    for(var i = 0; i < widget.length; i++){
+    for(var i = 0; i < widget.tabs.length; i++){
       if(i == indexSelected){
         boolsHasHoved.add(true);
       }
@@ -115,7 +113,7 @@ class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProvid
             padding: const EdgeInsets.all(5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: List.generate(widget.length, 
+              children: List.generate(widget.tabs.length, 
                 (index) {
                   return GestureDetector(
                   onTap: () async => await selectTab(index),
@@ -171,6 +169,43 @@ class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProvid
         ],
       ),
 
+    );
+  }
+}
+
+class TabModel extends StatelessWidget {
+  const TabModel({
+    required this.title,
+    required this.date,
+    required this.highlightedText,
+    required this.content,
+    Key? key,
+  }) : super(key: key);
+
+  final String title;
+  final String date;
+  final String highlightedText;
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: SelectableText(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+            ),
+            SelectableText(date, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+          ],
+        ),
+        const SizedBox(height: 10),
+        SelectableText(highlightedText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
+        const SizedBox(height: 20),
+        SelectableText(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
+      ],
     );
   }
 }

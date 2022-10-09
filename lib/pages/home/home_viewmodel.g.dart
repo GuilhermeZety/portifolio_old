@@ -57,19 +57,19 @@ mixin _$HomeViewModel on _HomeViewModel, Store {
     });
   }
 
-  late final _$projectsIsActiveAtom =
-      Atom(name: '_HomeViewModel.projectsIsActive', context: context);
+  late final _$experienceIsActiveAtom =
+      Atom(name: '_HomeViewModel.experienceIsActive', context: context);
 
   @override
-  bool get projectsIsActive {
-    _$projectsIsActiveAtom.reportRead();
-    return super.projectsIsActive;
+  bool get experienceIsActive {
+    _$experienceIsActiveAtom.reportRead();
+    return super.experienceIsActive;
   }
 
   @override
-  set projectsIsActive(bool value) {
-    _$projectsIsActiveAtom.reportWrite(value, super.projectsIsActive, () {
-      super.projectsIsActive = value;
+  set experienceIsActive(bool value) {
+    _$experienceIsActiveAtom.reportWrite(value, super.experienceIsActive, () {
+      super.experienceIsActive = value;
     });
   }
 
@@ -110,11 +110,11 @@ mixin _$HomeViewModel on _HomeViewModel, Store {
   }
 
   @override
-  void setProjectsIsActive(bool _) {
+  void setExperienceIsActive(bool _) {
     final _$actionInfo = _$_HomeViewModelActionController.startAction(
-        name: '_HomeViewModel.setProjectsIsActive');
+        name: '_HomeViewModel.setExperienceIsActive');
     try {
-      return super.setProjectsIsActive(_);
+      return super.setExperienceIsActive(_);
     } finally {
       _$_HomeViewModelActionController.endAction(_$actionInfo);
     }
@@ -126,7 +126,7 @@ mixin _$HomeViewModel on _HomeViewModel, Store {
 homeIsActive: ${homeIsActive},
 aboutIsActive: ${aboutIsActive},
 habilitiesIsActive: ${habilitiesIsActive},
-projectsIsActive: ${projectsIsActive}
+experienceIsActive: ${experienceIsActive}
     ''';
   }
 }

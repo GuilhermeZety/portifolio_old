@@ -14,7 +14,7 @@ class NavBar extends StatefulWidget with PreferredSizeWidget{
     this.homeIsActive = false,
     this.aboutIsActive = false,
     this.habilitiesIsActive = false,
-    this.projectsIsActive = false,
+    this.experienceIsActive = false,
   });
   
   final double height;
@@ -24,7 +24,7 @@ class NavBar extends StatefulWidget with PreferredSizeWidget{
   final bool homeIsActive;
   final bool aboutIsActive;
   final bool habilitiesIsActive;
-  final bool projectsIsActive;
+  final bool experienceIsActive;
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -71,20 +71,12 @@ class _NavBarState extends State<NavBar> {
                           widget.controller.animateTo(MediaQuery.of(context).size.height * 0.78 + 40, duration: const Duration(milliseconds: 500), curve: Curves.linear);
                           build(context);
                         }, isActive: widget.aboutIsActive,),
-                        ItemMenu(name: 'Projetos', onClick: () {
+                        ItemMenu(name: 'Experiência', onClick: () {
                           widget.controller.animateTo((MediaQuery.of(context).size.height * 0.78 + 40) + 500, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                        }, isActive: widget.projectsIsActive),
+                        }, isActive: widget.experienceIsActive),
                         ItemMenu(name: 'Habilidades', onClick: () {
-                          widget.controller.animateTo(1500, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                          widget.controller.animateTo((MediaQuery.of(context).size.height * 0.78 + 40) + 2500, duration: const Duration(milliseconds: 500), curve: Curves.linear);
                         }, isActive: widget.habilitiesIsActive,),
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 5),
-                        //   decoration: BoxDecoration(
-                        //     border: Border.all(color: const Color(0xFF29292E), width: 1),
-                        //     borderRadius: BorderRadius.circular(6)
-                        //   ),
-                        //   child: const Text("Pt")
-                        // )
                       ],
                     ): 
                     IconButton(onPressed: () => {}, icon: const Icon(Icons.menu))

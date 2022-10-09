@@ -44,7 +44,9 @@ class _ButtonOutlindedState extends State<ButtonOutlinded> {
           child: GestureDetector(
             onTap: widget.onTap,
             child: AnimatedContainer(
-              width: 150,
+              constraints: const BoxConstraints(
+                minWidth: 150
+              ),
               duration: const Duration(milliseconds: 100),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               decoration: BoxDecoration(

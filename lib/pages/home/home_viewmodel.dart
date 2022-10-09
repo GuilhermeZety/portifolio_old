@@ -23,7 +23,7 @@ abstract class _HomeViewModel with Store {
   void setHabilitiesIsActive(bool _) => habilitiesIsActive = _;
 
   @observable
-  bool projectsIsActive = false;
+  bool experienceIsActive = false;
   @action 
-  void setProjectsIsActive(bool _) => projectsIsActive = _;
+  void setExperienceIsActive(bool _) => experienceIsActive = _;
 }
