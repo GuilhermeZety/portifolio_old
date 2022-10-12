@@ -6,18 +6,20 @@ import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:portifolio/components/ProjectWidget.dart';
-import 'package:portifolio/components/Section.dart';
-import 'package:portifolio/components/nav_bar.dart';
+import 'package:portifolio/components/tab_bar_icons.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
-import '../../components/ButtonOutlined.dart';
+import '../../components/buttons/button_outlined.dart';
+import '../../components/navbar/nav_bar.dart';
 import '../../components/tab_bar_vertical.dart';
 import '../../utils/toasts.dart';
 import '../../utils/util.dart';
 import 'home_viewmodel.dart';
+import 'widgets/Section.dart';
+import 'widgets/project_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -57,8 +59,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   Animation<double>? secondSectionAnimationR;
 
   //third section
-  late TabController thirdSectionTabController;
   bool thirdSectionVisibility = false;
+
+  //fourth section
+  bool fourthSectionVisibility = false;
+  late AnimationController fourthSectionAnimationController;
+  Animation<double>? fourthSectionAnimationB;
   
   @override
   void initState() {
@@ -74,8 +80,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       vsync: this
     )..addListener(() => setState(() {}));
 
-    thirdSectionTabController = TabController(
-      length: 2,
+    fourthSectionAnimationController = AnimationController(
+      duration: const Duration(seconds: 1),
       vsync: this
     )..addListener(() => setState(() {}));
 
@@ -83,23 +89,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   }
 
   onLoad() async {    
-    scrollController.jumpTo(1700);
+    scrollController.jumpTo(3000);
 
     Timer.periodic(const Duration(milliseconds: 350), (t) {
         setState(() {
           boolColorMyNameFinaly = !boolColorMyNameFinaly;
         });
-    } );
+    });
+
     Timer.periodic(const Duration(milliseconds: 800), (t) {
         setState(() {
           boolArrowContinue = !boolArrowContinue;
         });
-    } );
+    });
+
     Timer.periodic(const Duration(milliseconds: 2000), (t) {
         setState(() {
           boxMeColor = !boxMeColor;
         });
-    } );
+    });
 
     await addAllAnimations();
 
@@ -119,6 +127,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
     secondSectionAnimationB = Tween(begin: 10.0, end: 0.0).animate(secondSectionAnimationController);
     secondSectionAnimationL = Tween(begin: -5.0, end: 0.0).animate(secondSectionAnimationController);
     secondSectionAnimationR = Tween(begin: 5.0, end: 0.0).animate(secondSectionAnimationController);
+
+    fourthSectionAnimationB = Tween(begin: 10.0, end: 0.0).animate(secondSectionAnimationController);
   }
 
   initFirstSectionAnimation() async  {
@@ -145,11 +155,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
     });
   }
 
+  initFouthSectionAnimation() async {
+    fourthSectionAnimationB = Tween(begin: 10.0, end: 0.0).animate(secondSectionAnimationController);
+
+    await secondSectionAnimationController.forward();
+
+    setState(() {
+      secondSectionHasAnimated = true;
+    });
+  }
+
   copyEmail(){
     Clipboard.setData(const ClipboardData(text: "guilherme.zety@outlook.com"));
 
     showSuccessToast(message: 'E-mail copiado com sucesso', fToast: FToast().init(context));
   }
+
+  
+  @override
+  void dispose() {
+    firstSectionAnimationController.dispose();
+    secondSectionAnimationController.dispose();
+    fourthSectionAnimationController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -211,12 +241,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
             });
           }
 
-          if(o >= (h * 0.7) + 550 && o <= (h * 0.7) + 2400){         
+          if(o >= (h * 0.7) + 550 && o <= (h * 0.7) + 2000){         
             controller.setExperienceIsActive(true);
           }
           else{                
             controller.setExperienceIsActive(false);   
           }
+
+          
+          if(o >= (h * 0.7) + 1800){       
+            initFouthSectionAnimation();     
+            setState(() {
+              fourthSectionVisibility = true;
+            });
+          }
+          else{            
+            secondSectionAnimationController.reverse();
+            controller.setHabilitiesIsActive(false);
+          }
+
+          if(o >= (h * 0.7) + 2000){
+            controller.setHabilitiesIsActive(true);
+          }
+          else{            
+            setState(() {
+              fourthSectionVisibility = false;
+            });            
+          }
+
         }
         return false;
       },
@@ -228,16 +280,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         body: SafeArea(
           child: WebSmoothScroll(
             animationDuration: 100,
-            controller: scrollController,
+            controller: scrollController,            
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
-              controller: scrollController,
+              controller: scrollController,              
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: 7000,
                 child: Column(
                   children:  [
-                    //First section
+                    //First section - Inicio
                     Section(
                       height: MediaQuery.of(context).size.height * 0.75,
                       durationOpacity: const Duration(seconds: 1),
@@ -310,7 +361,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                         ],
                       ),
                     ),
-                    //Arrow Continue
+                    //Arrow Continue - Continue
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -361,7 +412,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                         )
                       ],
                     ),
-                    //Second Section
+                    //Second Section - Sobre
                     Section(
                       height: 500,
                       backgroundColor: Theme.of(context).backgroundColor,                      
@@ -377,14 +428,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                               padding: const EdgeInsets.symmetric(vertical: 90),
                               margin: const EdgeInsets.only(left: 10),
                               child: SizedBox(
-                                width: 320,
-                                height: 320,
+                                width: isLandscape(context) ? w > 800 ? 320  :  250 : 0,
+                                height: isLandscape(context) ? w > 800 ? 320  :  250 : 0,
                                 child: Stack(
                                   children: [
                                     AnimatedContainer(
                                       duration: const Duration(seconds: 2),
-                                      width: 300,
-                                      height: 300,
+                                      width: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
+                                      height: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
                                       decoration: BoxDecoration(
                                         color: boxMeColor ? Theme.of(context).primaryColor : const Color(0xFFD92AF5) , 
                                         borderRadius: BorderRadius.circular(5)
@@ -394,15 +445,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                       duration: const Duration(milliseconds: 400),
                                       left: 6,
                                       top: 6,
-                                      child: Container(
-                                        width: 300,
-                                        height: 300,
+                                      child: AnimatedContainer(
+                                        duration: const Duration(seconds: 2),
+                                        width: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
+                                        height: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
                                         decoration: BoxDecoration(
                                           border: Border(top: BorderSide(color: Theme.of(context).backgroundColor, width: 6), left: BorderSide(color: Theme.of(context).backgroundColor, width: 6))
                                         ), 
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(5),
-                                          child: Image.asset('assets/me.jpg')
+                                          child: Image.asset('assets/images/me.jpg')
                                         )
                                       ),
                                     )
@@ -414,7 +466,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                           Transform.translate(
                             offset: Offset(secondSectionAnimationR != null ? secondSectionAnimationR!.value : 0, secondSectionAnimationB != null ? secondSectionAnimationB!.value : 0),
                             child: Container(
-                              width: (w * 0.95) - 400,       
+                              width: isLandscape(context) ? w > 800 ? (w * 0.95) - 400  :  (w * 0.95) - 280 : 0,       
                               constraints: const BoxConstraints(
                                 maxWidth: 1200 - 400,
                               ),                             
@@ -468,7 +520,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                         ],
                       ),
                     ),
-                    //Third Section
+                    //Third Section - Experiencia
                     Section(
                       durationOpacity: const Duration(seconds: 1),
                       opacity: thirdSectionVisibility ? 1 : 0,
@@ -479,7 +531,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
-                                width: 300,
+                                width: isLandscape(context) ? ( w > 950 ?  300  : 0 ) : 0,
                                 child: Image.asset('assets/gifs/holding_cat.gif'),
                               ),
                               Padding(
@@ -492,7 +544,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                       child: Text('EXPERIÊNCIA', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
                                     ),
                                     TabBarVertical(
-                                      width: (w * 0.95) - 300,
+                                      width: isLandscape(context) ? w > 950 ? (w * 0.95) - 300 :  (w * 0.95) : (w * 0.95),
                                       constraints: const BoxConstraints(
                                         maxWidth: 1200 - 300
                                       ),
@@ -542,18 +594,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children:  [
                                   ProjectWidget(
-                                    width: w * 0.1 + 300,
+                                    width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 : 300 : 0,
                                     title: 'Portifólio Pessoal',
                                     content: 'Projeto desenvolvido a partir do curso de JavaScript ES6+ completo da Origamid, para por em prática meus estudos iniciais de JS.',
                                     languages: 'Flutter & Dart',
-                                    imageAsset: 'assets/Portifolio.png',
+                                    imageAsset: 'assets/images/Portifolio.png',
                                   ),
                                   ProjectWidget(
-                                    width: w * 0.1 + 300,
+                                    width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 :  300 : 0,
                                     title: 'RpGaming (Em Desenvolvimento)',
                                     content: 'Projeto desenvolvido a partir do curso de JavaScript ES6+ completo da Origamid, para por em prática meus estudos iniciais de JS.',
                                     languages: 'Flutter & Dart',
-                                    imageAsset: 'assets/RpGaming.png',
+                                    imageAsset: 'assets/images/RpGaming.png',
                                   ),
                                 ],
                               ),
@@ -561,18 +613,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children:   [
                                   ProjectWidget(
-                                    width: w * 0.1 + 300,
+                                    width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 : 300 : 0,
                                     title: 'App Gestão Financeira (Em Breve)',
-                                    content: 'Wait',
+                                    content: 'Projeto futuro, um app simples, para no meu caso, gerir as contas e emprestimos de dinheiro em minha familia :), tanto quanto fazer pagamentos e ver saldos e afins ',
                                     languages: 'Flutter & Dart',
-                                    imageAsset: 'assets/EmBreve.png',
+                                    imageAsset: 'assets/images/EmBreve.png',
                                   ),
                                   ProjectWidget(
-                                    width: w * 0.1 + 300,
+                                    width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 : 300 : 0,
                                     title: 'Em Breve',
                                     content: 'Estou sempre estudando, consequentemente milhares de projetos vem em mente, tenho uma vasta lista aqui, porém não vale a pena entrar em muitos detalhes por aqui :)',
                                     languages: 'Flutter & Dart',
-                                    imageAsset: 'assets/EmBreve.png',
+                                    imageAsset: 'assets/images/EmBreve.png',
                                   ),
                                 ],
                               )
@@ -581,21 +633,110 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                         ],
                       )
                     ),                    
-                    //
+                    //Fourth Section - Habilidades
                     Section(
-                      height: 500,
+                      height: 400,
                       backgroundColor: Theme.of(context).backgroundColor,                      
+                      durationOpacity: const Duration(seconds: 1),
+                      opacity: fourthSectionVisibility ? 1 : 0,
+                      child: Transform.translate(
+                         offset: Offset(0, fourthSectionAnimationB != null ? fourthSectionAnimationB!.value : 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 20, top: 20),
+                              child: Text('HABILIDADES', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
+                            ),
+                            Row(
+                              mainAxisAlignment: isLandscape(context) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TabBarIcons(
+                                  width: isLandscape(context) ? ( w > 950 ?  (w * 0.95) - 250 : (w * 0.95) ) : 0 ,
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 1200 - 300
+                                  ),
+                                  tabWidth: 200 + (w * 0.05),
+                                  height: 300,
+                                  tabs: [
+                                    SvgPicture.asset('assets/svg/flutter.svg'),
+                                    SvgPicture.asset('assets/svg/dart.svg'),
+                                    SvgPicture.asset('assets/svg/firebase.svg'),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Image.asset('assets/images/database.png'),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Image.asset('assets/images/design.png'),
+                                    ),
+                                    SvgPicture.asset('assets/svg/git.svg'),
+                                  ],
+                                  items: const [
+                                    TabModelIcons(
+                                      title: 'Flutter',
+                                      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                    ),
+                                    TabModelIcons(
+                                      title: 'Dart',
+                                      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                    ),
+                                    TabModelIcons(
+                                      title: 'Firebase/Outros',
+                                      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                    ),
+                                    TabModelIcons(
+                                      title: 'Databases',
+                                      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                    ),
+                                    TabModelIcons(
+                                      title: 'Design UX/UI',
+                                      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                    ),
+                                    TabModelIcons(
+                                      title: 'Versionamento',
+                                      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                    ),
+                                  ], 
+                                ),
+                                Container(
+                                  width: isLandscape(context) ? ( w > 950 ? w * 0.35 : 0 ) : 0,
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 250,
+                                  ),
+                                  child: Image.asset('assets/gifs/cat_sleep.gif'),
+                                ),  
+                              ],                            
+                            ),                                             
+                          ],
+                        ),
+                      ),
+                    ),
+                    //Footer
+                    Section(
+                      height: 50,
+                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,                      
                       durationOpacity: const Duration(seconds: 1),
                       opacity: secondSectionVisibility ? 1 : 0,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: isLandscape(context) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
-                        children: const [
-                          
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('Desenvolvido com muito ❤ por ', style: TextStyle(fontSize: 18)),
+                              InkWell(
+                                onTap: () => html.window.open('https://www.linkedin.com/in/guilherme-m-l-martins/', '_blank'),
+                                child: Text('Guilherme Martins', style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 18))
+                              ),
+                            ],
+                          )
                         ],
                       ),
-                    ),
-                  
+                    ),                  
                   ],
                 ),
               ),

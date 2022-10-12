@@ -55,10 +55,10 @@ class _ButtonOutlindedState extends State<ButtonOutlinded> {
                 color: widget.color.withOpacity(opacity)
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   widget.icon ?? const SizedBox(),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 20),
                   Text(widget.name, style: const TextStyle(color: Colors.white),),
                 ],
               ),

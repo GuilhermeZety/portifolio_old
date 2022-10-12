@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'ButtonOutlined.dart';
+import '../../../components/buttons/button_outlined.dart';
 
 class ProjectWidget extends StatefulWidget {
   const ProjectWidget({
@@ -138,7 +138,9 @@ class _ProjectWidgetState extends State<ProjectWidget> with SingleTickerProvider
           ),
           Container(
             margin: const EdgeInsets.all(20),
-            child: Row(
+            child: 
+            widget.width > 300 ?
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ButtonOutlinded(
@@ -149,7 +151,27 @@ class _ProjectWidgetState extends State<ProjectWidget> with SingleTickerProvider
                   tooltipMessage: 'clique para acessar o projeto',
                 ),
                 ButtonOutlinded(
+                  onTap: () {},
+                  name: 'Repositório', 
+                  icon: const Icon(FontAwesomeIcons.cloudArrowDown, color: Color(0xFFD92AF5),),
+                  color: const Color(0xFFD92AF5),
+                  tooltipMessage: 'clique para acessar o repositório no github',
+                ),
+              ],
+            )
+            :
+            Column(
+              children: [
+                ButtonOutlinded(
                   onTap: () {}, 
+                  name: 'Acessar', 
+                  icon: Icon(FontAwesomeIcons.cloudArrowDown, color: Theme.of(context).primaryColor,),
+                  color: Theme.of(context).primaryColor,
+                  tooltipMessage: 'clique para acessar o projeto',
+                ),
+                const SizedBox(height: 10),
+                ButtonOutlinded(
+                  onTap: () {},
                   name: 'Repositório', 
                   icon: const Icon(FontAwesomeIcons.cloudArrowDown, color: Color(0xFFD92AF5),),
                   color: const Color(0xFFD92AF5),
