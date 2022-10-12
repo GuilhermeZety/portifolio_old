@@ -83,10 +83,7 @@ abstract class _HomeViewModel with Store {
     @action 
     void setSecondSectionVisibility(bool _) => secondSectionVisibility = _;
 
-    @observable
     bool boxMeColor = false;
-    @action 
-    void setBoxMeColor(bool _) => boxMeColor = _;
 
     @observable
     Animation<double>? secondSectionAnimationB;
@@ -132,43 +129,21 @@ abstract class _HomeViewModel with Store {
 
 
   ///INFORMAÇÕES ANIMAÇÃO NOME
-    @observable
     String myname = '           Guilherme Martins.';
     
-    @observable
     bool boolColorMyNameFinaly = false;
-    @action 
-    void setBoolColorMyNameFinaly(bool _) => boolColorMyNameFinaly = _;
   ///
   
   
-  ///INFORMATIONS ARROW CONTINUE  
-    @observable
-    bool boolArrowContinue = true;
-    @action 
-    void setBoolArrowContinue(bool _) => boolArrowContinue = _;
 
-    @observable
+  ///INFORMATIONS ARROW CONTINUE  
+    bool boolArrowContinue = true;
+
     Color colorArrowContinue = Colors.grey.shade300;
-    @action 
-    void setColorArrowContinue(Color _) => colorArrowContinue = _;
   ///
 
   onLoad() async {
-    ///Periodics
-      Timer.periodic(const Duration(milliseconds: 350), (t) {
-          setBoolColorMyNameFinaly(!boolColorMyNameFinaly);
-      });
-
-      Timer.periodic(const Duration(milliseconds: 800), (t) {
-          setBoolArrowContinue(!boolArrowContinue);
-      });
-
-      Timer.periodic(const Duration(milliseconds: 2000), (t) {
-          setBoxMeColor(!boxMeColor);
-      });
-    ///
-
+    
     await addAllAnimations();
 
     await Future.delayed(const Duration(milliseconds: 500));
@@ -268,7 +243,7 @@ abstract class _HomeViewModel with Store {
       ///
 
       ///SETANDO FOURTH SECTION
-        if(o >= (h * 0.7) + 1800){       
+        if(o >= (h * 0.7) + 1700){       
           initFouthSectionAnimation();  
           setFourthSectionVisibility(true);
         }
