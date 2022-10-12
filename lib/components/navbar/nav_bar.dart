@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../pages/home/home_page.dart';
 import '../../utils/util.dart';
 
 import 'item_menu.dart';
@@ -59,7 +58,7 @@ class _NavBarState extends State<NavBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,     
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Logo(controller: scrollController,),
+                  Logo(controller: widget.controller,),
                   isLandscape(context) ?
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -77,7 +76,6 @@ class _NavBarState extends State<NavBar> {
                         ItemMenu(name: 'Habilidades', onClick: () {
                           widget.controller.animateTo((MediaQuery.of(context).size.height * 0.78 + 40) + 2500, duration: const Duration(milliseconds: 500), curve: Curves.linear);
                         }, isActive: widget.habilitiesIsActive,),
-                        IconButton(onPressed: () => print(MediaQuery.of(context).size.width), icon: const Icon(Icons.sanitizer))
                       ],
                     ): 
                     IconButton(onPressed: () => {}, icon: const Icon(Icons.menu))
