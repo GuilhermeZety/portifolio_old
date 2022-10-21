@@ -192,9 +192,9 @@ class TabModelIcons extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SelectableText(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+        Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
         const SizedBox(height: 20),
-        SelectableText(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
+        Text(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
       ],
     );
   }

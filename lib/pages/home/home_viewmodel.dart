@@ -142,9 +142,8 @@ abstract class _HomeViewModel with Store {
     Color colorArrowContinue = Colors.grey.shade300;
   ///
 
-  onLoad() async {
-    
-    await addAllAnimations();
+  onLoad(setS) async {    
+    await addAllAnimations(setS);
 
     await Future.delayed(const Duration(milliseconds: 500));
 
@@ -153,38 +152,27 @@ abstract class _HomeViewModel with Store {
     initFirstSectionAnimation();
   }
 
-  addAllAnimations() async {
-    setFirstSectionAnimationL(Tween(begin: -50.0, end: 0.0).animate(firstSectionAnimationController));
-    setFirstSectionAnimationR(Tween(begin: 80.0, end: 40.0).animate(firstSectionAnimationController));
-    setFirstSectionAnimationRB(Tween(begin: 40.0, end: 0.0).animate(firstSectionAnimationController));
+  addAllAnimations(setS) async {
+    setFirstSectionAnimationL(Tween(begin: -50.0, end: 0.0).animate(firstSectionAnimationController)..addListener(setS));
+    setFirstSectionAnimationR(Tween(begin: 80.0, end: 40.0).animate(firstSectionAnimationController)..addListener(setS));
+    setFirstSectionAnimationRB(Tween(begin: 40.0, end: 0.0).animate(firstSectionAnimationController)..addListener(setS));
 
-    setSecondSectionAnimationB(Tween(begin: 10.0, end: 0.0).animate(secondSectionAnimationController));
-    setSecondSectionAnimationL(Tween(begin: -5.0, end: 0.0).animate(secondSectionAnimationController));
-    setSecondSectionAnimationR(Tween(begin: 5.0, end: 0.0).animate(secondSectionAnimationController));
+    setSecondSectionAnimationB(Tween(begin: 10.0, end: 0.0).animate(secondSectionAnimationController)..addListener(setS));
+    setSecondSectionAnimationL(Tween(begin: -5.0, end: 0.0).animate(secondSectionAnimationController)..addListener(setS));
+    setSecondSectionAnimationR(Tween(begin: 5.0, end: 0.0).animate(secondSectionAnimationController)..addListener(setS));
 
-    setFourthSectionAnimationB(Tween(begin: 10.0, end: 0.0).animate(fourthSectionAnimationController));
+    setFourthSectionAnimationB(Tween(begin: 10.0, end: 0.0).animate(fourthSectionAnimationController)..addListener(setS));
   }
 
   initFirstSectionAnimation() async  {
-    setFirstSectionAnimationL(Tween(begin: -50.0, end: 0.0).animate(firstSectionAnimationController));
-    setFirstSectionAnimationR(Tween(begin: 80.0, end: 40.0).animate(firstSectionAnimationController));
-    setFirstSectionAnimationRB(Tween(begin: 40.0, end: 0.0).animate(firstSectionAnimationController));
-
     await firstSectionAnimationController.forward();
   }
 
   initSecondSectionAnimation() async {
-    setSecondSectionAnimationB(Tween(begin: 10.0, end: 0.0).animate(secondSectionAnimationController));
-    setSecondSectionAnimationL(Tween(begin: -5.0, end: 0.0).animate(secondSectionAnimationController));
-    setSecondSectionAnimationR(Tween(begin: 5.0, end: 0.0).animate(secondSectionAnimationController));
-
     await secondSectionAnimationController.forward();
   }
-
   
   initFouthSectionAnimation() async {
-    setFourthSectionAnimationB(Tween(begin: 10.0, end: 0.0).animate(fourthSectionAnimationController));
-
     await fourthSectionAnimationController.forward();
   }
 

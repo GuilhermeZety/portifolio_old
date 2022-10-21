@@ -5,18 +5,18 @@ import 'dart:async';
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portifolio/components/tab_bar_icons.dart';
+import 'package:portifolio/components/tab_bar.dart';
+import 'package:portifolio/pages/home/widgets/sections/FirstSection.dart';
+import 'package:portifolio/pages/home/widgets/sections/SecondSection.dart';
+import 'package:portifolio/pages/home/widgets/sections/section.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
-import '../../components/buttons/button_outlined.dart';
 import '../../components/navbar/nav_bar.dart';
-import '../../components/tab_bar_vertical.dart';
 import '../../utils/util.dart';
 import 'home_viewmodel.dart';
-import 'widgets/Section.dart';
 import 'widgets/project_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,22 +31,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   
   @override
   void initState() {
-    super.initState();
+    super.initState(); 
 
     controller.setFirstSectionAnimationController(AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this
-    )..addListener(() => setState(() {})));
+    ));
 
     controller.setSecondSectionAnimationController(AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this
-    )..addListener(() => setState(() {})));
+    ));
 
     controller.setFourthSectionAnimationController(AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this
-    )..addListener(() => setState(() {})));
+    ));
 
     ///Periodics
       Timer.periodic(const Duration(milliseconds: 350), (t) {
@@ -68,7 +68,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       });
     ///
 
-    Timer.run(() async => await controller.onLoad());
+    Timer.run(() async => await controller.onLoad(() => setState(() {})));
+    
   }
 
   @override
@@ -89,93 +90,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       child: Title(
         color: Colors.white,
         title: 'Portifólio | Guilherme Martins',
-        child: Scaffold(
+        child: Scaffold(            
             appBar: NavBar(height: 70, controller: controller.scrollController, aboutIsActive: controller.aboutIsActive, habilitiesIsActive: controller.habilitiesIsActive, homeIsActive: controller.homeIsActive, experienceIsActive: controller.experienceIsActive),
             body: SafeArea(
-              child: Observer(
-                builder: (_) => WebSmoothScroll(
+              child: WebSmoothScroll(
                   animationDuration: 100,
                   controller: controller.scrollController,            
                   child: SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: isLandscape(context) ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics(),
                     controller: controller.scrollController,              
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         children:  [
                           //First section - Inicio
-                          Section(
-                            height: MediaQuery.of(context).size.height * 0.75,
-                            durationOpacity: const Duration(seconds: 1),
-                            opacity: controller.firstSectionVisibility ? 1 : 0,
-                            child: Row(
-                              mainAxisAlignment: isLandscape(context) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Transform.translate(
-                                  offset: Offset(controller.firstSectionAnimationL != null ? controller.firstSectionAnimationL!.value : 0, 0),
-                                  child: SizedBox(
-                                    // color: Colors.amber,
-                                    width: 397,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: isLandscape(context) ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-                                      children: [
-                                        const SelectableText('Olá, eu sou o', style: TextStyle(fontSize: 32)),
-                                        TweenAnimationBuilder<int>(
-                                          tween: IntTween(begin: 0, end: controller.myname.length), 
-                                          duration: const Duration(seconds: 3), 
-                                          builder: (BuildContext context, int value, child) {
-                                            return Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                SelectableText(controller.myname.substring(0, value ).trim(), style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 40, letterSpacing: 3)),
-                                                Text('|', style: TextStyle(color: controller.boolColorMyNameFinaly ? Colors.white : Colors.transparent, fontSize: 32)),
-                                              ],
-                                            );
-                                          }
-                                        ),
-                                        const SelectableText('Desenvolvedor Flutter', style: TextStyle(fontSize: 32)),
-                                        const SizedBox(height: 10),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            ButtonOutlinded(
-                                              onTap: () => html.window.open('https://www.linkedin.com/in/guilherme-m-l-martins/', '_blank'), 
-                                              name: 'Linkedin', 
-                                              icon: const Icon(FontAwesomeIcons.linkedinIn, color: Color(0xFF0e76a8)), 
-                                              color: const Color(0xFF0e76a8),
-                                              tooltipMessage: 'clique para abrir em outra aba o perfil',
-                                            ),
-                                            const SizedBox(width: 20),                                      
-                                            ButtonOutlinded(
-                                              onTap: () => html.window.open('https://github.com/GuilhermeZety', '_blank'), 
-                                              name: 'GitHub', 
-                                              icon: const Icon(FontAwesomeIcons.linkedinIn, color: Color(0xFFD92AF5)), 
-                                              color: const Color(0xFFD92AF5),
-                                              tooltipMessage: 'clique para abrir em outra aba o perfil',
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: Offset(controller.firstSectionAnimationR != null ? controller.firstSectionAnimationR!.value : 0, controller.firstSectionAnimationRB != null ? controller.firstSectionAnimationRB!.value : 0),
-                                  child: Container(
-                                    // color: Colors.red,
-                                    width: isLandscape(context) ? w > 740 ? MediaQuery.of(context).size.width * 0.40 : MediaQuery.of(context).size.width *0.35 : 0,
-                                    constraints: const BoxConstraints(
-                                      maxWidth: 500,
-                                      maxHeight: 400
-                                    ),
-                                    child: Image.asset('assets/gifs/spinning_cat.gif'),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                          FirstSection(controller: controller),
                           //Arrow Continue - Continue
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -207,7 +136,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                         const SizedBox(width: 5),
                                         AnimatedContainer(
                                           duration: const Duration(milliseconds: 1200),
-                                          child: Text('continue', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: controller.colorArrowContinue, letterSpacing: 3))
+                                          child: Center(child: Text('continue', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: controller.colorArrowContinue, letterSpacing: 3)))
                                         ),
                                         const SizedBox(width: 5),
                                         AnimatedOpacity(
@@ -228,113 +157,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                             ],
                           ),
                           //Second Section - Sobre
-                          Section(
-                            height: 500,
-                            backgroundColor: Theme.of(context).backgroundColor,                      
-                            durationOpacity: const Duration(seconds: 1),
-                            opacity: controller.secondSectionVisibility ? 1 : 0,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: isLandscape(context) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
-                              children: [
-                                Transform.translate(
-                                  offset: Offset(controller.secondSectionAnimationL != null ? controller.secondSectionAnimationL!.value : 0, controller.secondSectionAnimationB != null ? controller.secondSectionAnimationB!.value : 0),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 90),
-                                    margin: const EdgeInsets.only(left: 10),
-                                    child: SizedBox(
-                                      width: isLandscape(context) ? w > 800 ? 320  :  250 : 0,
-                                      height: isLandscape(context) ? w > 800 ? 320  :  250 : 0,
-                                      child: Stack(
-                                        children: [
-                                          AnimatedContainer(
-                                            duration: const Duration(seconds: 2),
-                                            width: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
-                                            height: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
-                                            decoration: BoxDecoration(
-                                              color: controller.boxMeColor ? Theme.of(context).primaryColor : const Color(0xFFD92AF5) , 
-                                              borderRadius: BorderRadius.circular(5)
-                                            ),
-                                          ),
-                                          AnimatedPositioned(
-                                            duration: const Duration(milliseconds: 400),
-                                            left: 6,
-                                            top: 6,
-                                            child: AnimatedContainer(
-                                              duration: const Duration(seconds: 2),
-                                              width: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
-                                              height: isLandscape(context) ? w > 800 ? 300  :  230 : 0,
-                                              decoration: BoxDecoration(
-                                                border: Border(top: BorderSide(color: Theme.of(context).backgroundColor, width: 6), left: BorderSide(color: Theme.of(context).backgroundColor, width: 6))
-                                              ), 
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(5),
-                                                child: Image.asset('assets/images/me.jpg')
-                                              )
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: Offset(controller.secondSectionAnimationR != null ? controller.secondSectionAnimationR!.value : 0, controller.secondSectionAnimationB != null ? controller.secondSectionAnimationB!.value : 0),
-                                  child: Container(
-                                    width: isLandscape(context) ? w > 800 ? (w * 0.95) - 400  :  (w * 0.95) - 280 : 0,       
-                                    constraints: const BoxConstraints(
-                                      maxWidth: 1200 - 400,
-                                    ),                             
-                                    padding: const EdgeInsets.symmetric(vertical: 90),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            const SelectableText('SOBRE MIM', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                                            const SizedBox(height: 6),
-                                            const SelectableText('Blumenau - SC', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                                            const SizedBox(height: 10),
-                                            SelectableText('Um apaixonado em programação que* ' 
-                                            'Possuo experiência em Desenvolvimento Web. Trabalhei com projetos envolvendo ECommerce,'  
-                                            ' APIs e banco de dados. Atualmente estou focando nas tecnologias voltadas ao FrontEnd. '
-                                            'Hoje já entendo tecnologias como ReactJS, Bootstrap, Mysql, etc.', style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
-                                          ],
-                                        ),                                        
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 20),
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(right: 15),
-                                                child: ButtonOutlinded(
-                                                  onTap: () => html.window.open('https://github.com/GuilhermeZety/GuilhermeZety/files/9729893/Guilherme_Martins.pdf', '_blank'), 
-                                                  name: 'Currículo', 
-                                                  icon: Icon(FontAwesomeIcons.cloudArrowDown, color: Theme.of(context).primaryColor,),
-                                                  color: Theme.of(context).primaryColor,
-                                                  tooltipMessage: 'clique para baixar o curiculo',
-                                                ),
-                                              ),
-                                              ButtonOutlinded(
-                                                onTap: () => controller.copyEmail(context), 
-                                                name: 'E-mail', 
-                                                icon: const Icon(FontAwesomeIcons.cloudArrowDown, color: Color(0xFFD92AF5),),
-                                                color: const Color(0xFFD92AF5),
-                                                tooltipMessage: 'clique para copiar o email',
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ),
-                              ],
-                            ),
-                          ),
+                          SecondSection(controller: controller),
                           //Third Section - Experiencia
                           Section(
                             durationOpacity: const Duration(seconds: 1),
@@ -354,11 +177,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          const Padding(
-                                            padding: EdgeInsets.only(bottom: 20),
-                                            child: Text('EXPERIÊNCIA', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
+                                          const SelectionArea(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(bottom: 20),
+                                              child: Text('EXPERIÊNCIA', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
+                                            ),
                                           ),
-                                          TabBarVertical(
+                                          TabBarText(
                                             width: isLandscape(context) ? w > 950 ? (w * 0.95) - 300 :  (w * 0.95) : (w * 0.95),
                                             constraints: const BoxConstraints(
                                               maxWidth: 1200 - 300
@@ -403,7 +228,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                   children: [                            
                                     const Padding(
                                       padding: EdgeInsets.only(bottom: 20),
-                                      child: Text('PROJETOS', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
+                                      child: SelectableText('PROJETOS', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -461,7 +286,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                 children: [
                                   const Padding(
                                     padding: EdgeInsets.only(bottom: 20, top: 20),
-                                    child: Text('HABILIDADES', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
+                                    child: SelectableText('HABILIDADES', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, ),),
                                   ),
                                   Row(
                                     mainAxisAlignment: isLandscape(context) ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
@@ -556,8 +381,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                       ),
                     ),
                   ),
-                ),
-              ),
+                ),              
             ),     
           )
         )

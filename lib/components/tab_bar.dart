@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:portifolio/utils/util.dart';
 
-class TabBarVertical extends StatefulWidget {
-  const TabBarVertical({
+class TabBarText extends StatefulWidget {
+  const TabBarText({
     super.key, 
     required this.width,
     required this.height,
@@ -19,10 +20,10 @@ class TabBarVertical extends StatefulWidget {
   final List<Widget> items;
 
   @override
-  State<TabBarVertical> createState() => _TabBarVerticalState();
+  State<TabBarText> createState() => _TabBarTextState();
 }
 
-class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProviderStateMixin{
+class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateMixin{
   List<bool> boolsHasHoved = [];
   late AnimationController controller;
   Animation<double>? animation;
@@ -39,8 +40,9 @@ class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProvid
     controller = AnimationController(
       duration: const Duration(milliseconds: 100),
       vsync: this
-    )..addListener(() => setState(() {}));
+    );
 
+    animation = Tween(begin: -20.0, end: 0.0).animate(controller)..addListener(() => setState(() {}));
     
     controller.forward();
     for(var i = 0; i < widget.tabs.length; i++){
@@ -55,23 +57,19 @@ class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProvid
 
   selectTab(index) async {
     if(index != indexSelected){
-      setState(() {
-        changing = true;
-      });
+      boolsHasHoved[index] = true;
+      changing = true;
+      indexSelected = index;
+      setState(() {});
+      
       await controller.reverse();
 
-      setState(() {
-        boolsHasHoved[index] = true;
-        indexSelected = index;
-        changing = false;
-      });
-
-      animation = Tween(begin: -20.0, end: 0.0).animate(controller);
+      changing = false;
+      setState(() {});
 
       await controller.forward();
 
-      clearHooves();
-      
+      clearHooves();      
     }
   }
 
@@ -98,7 +96,8 @@ class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isLandscape(context) ?
+    Container(
       width: widget.width,
       height: widget.height,
       constraints: widget.constraints,
@@ -112,6 +111,71 @@ class _TabBarVerticalState extends State<TabBarVertical> with SingleTickerProvid
             width: widget.tabWidth,
             padding: const EdgeInsets.all(5),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: List.generate(widget.tabs.length, 
+                (index) {
+                  return GestureDetector(
+                  onTap: () async => await selectTab(index),
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    onHover: (event) {
+                      setState(() {
+                        boolsHasHoved[index] = true;
+                      });
+                    },
+                    onExit: (event) {
+                      if(index != indexSelected){
+                        setState(() {
+                          boolsHasHoved[index] = false;
+                        });
+                      }
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 100),
+                      padding: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      decoration:  BoxDecoration(
+                        color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
+                        border: Border(left: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
+                      ),
+                      child: Text(widget.tabs[index], style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2),),
+                    ),
+                  ),
+                );
+                }
+              )
+            )            
+          ),
+          Column(
+            children: [
+              AnimatedOpacity(
+                opacity: changing ? 0 : 1,
+                duration: const Duration(milliseconds: 50),
+                child: Transform.translate(
+                  offset: Offset(animation != null ? animation!.value : 0, 0),
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 50),
+                    width: widget.width - widget.tabWidth - 50,
+                    constraints: widget.constraints.copyWith(
+                      maxWidth: 1200 - widget.tabWidth - 50 - 300
+                    ),
+                    child: widget.items[indexSelected],
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    )
+    :
+    SizedBox(
+      width: MediaQuery.of(context).size.width * 0.95,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: List.generate(widget.tabs.length, 
                 (index) {
@@ -189,23 +253,25 @@ class TabModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: SelectableText(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-            ),
-            SelectableText(date, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-          ],
-        ),
-        const SizedBox(height: 10),
-        SelectableText(highlightedText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
-        const SizedBox(height: 20),
-        SelectableText(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
-      ],
+    return SelectionArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+              ),
+              Text(date, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(highlightedText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
+          const SizedBox(height: 20),
+          Text(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
+        ],
+      ),
     );
   }
 }
