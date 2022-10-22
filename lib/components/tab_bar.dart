@@ -155,7 +155,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
                   offset: Offset(animation != null ? animation!.value : 0, 0),
                   child: Container(
                     margin: const EdgeInsets.only(left: 50),
-                    width: widget.width - widget.tabWidth - 50,
+                    width: widget.width - widget.tabWidth - 50 ,
                     constraints: widget.constraints.copyWith(
                       maxWidth: 1200 - widget.tabWidth - 50 - 300
                     ),
@@ -171,42 +171,46 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
     :
     SizedBox(
       width: MediaQuery.of(context).size.width * 0.95,
+      height: 550,
       child: Column(
         children: [
           Container(
+            height: 100,
             padding: const EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            child: GridView.count(
+              childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 4),
+              crossAxisCount: 3,              
               children: List.generate(widget.tabs.length, 
                 (index) {
                   return GestureDetector(
-                  onTap: () async => await selectTab(index),
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    onHover: (event) {
-                      setState(() {
-                        boolsHasHoved[index] = true;
-                      });
-                    },
-                    onExit: (event) {
-                      if(index != indexSelected){
+                    onTap: () async => await selectTab(index),
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      onHover: (event) {
                         setState(() {
-                          boolsHasHoved[index] = false;
+                          boolsHasHoved[index] = true;
                         });
-                      }
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 100),
-                      padding: const EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      decoration:  BoxDecoration(
-                        color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
-                        border: Border(left: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
+                      },
+                      onExit: (event) {
+                        if(index != indexSelected){
+                          setState(() {
+                            boolsHasHoved[index] = false;
+                          });
+                        }
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 100),
+                        padding: const EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        decoration:  BoxDecoration(
+                          color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
+                          border: Border(top: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
+                        ),
+                        child: Text(widget.tabs[index], style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2),),
                       ),
-                      child: Text(widget.tabs[index], style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2),),
                     ),
-                  ),
-                );
+                  );
                 }
               )
             )            
@@ -219,8 +223,9 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
                 child: Transform.translate(
                   offset: Offset(animation != null ? animation!.value : 0, 0),
                   child: Container(
-                    margin: const EdgeInsets.only(left: 50),
-                    width: widget.width - widget.tabWidth - 50,
+                    // color: Colors.amber,
+                    margin: isLandscape(context) ? const EdgeInsets.only(left: 50) : null,
+                    width: isLandscape(context) ? widget.width - widget.tabWidth - 50 : MediaQuery.of(context).size.width,
                     constraints: widget.constraints.copyWith(
                       maxWidth: 1200 - widget.tabWidth - 50 - 300
                     ),
@@ -243,6 +248,7 @@ class TabModel extends StatelessWidget {
     required this.date,
     required this.highlightedText,
     required this.content,
+    required this.keywords,
     Key? key,
   }) : super(key: key);
 
@@ -250,6 +256,7 @@ class TabModel extends StatelessWidget {
   final String date;
   final String highlightedText;
   final String content;
+  final String keywords;
 
   @override
   Widget build(BuildContext context) {
@@ -270,6 +277,8 @@ class TabModel extends StatelessWidget {
           Text(highlightedText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
           const SizedBox(height: 20),
           Text(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
+          const SizedBox(height: 10),
+          Text('keywords: $keywords', style: TextStyle(color: Theme.of(context).primaryColor),),
         ],
       ),
     );

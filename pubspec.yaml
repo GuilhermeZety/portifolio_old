@@ -97,6 +97,7 @@ flutter:
     - family: Sahitya
       fonts:
         - asset: assets/fonts/Sahitya-Regular.ttf
+        - weight: 400
         - asset: assets/fonts/Sahitya-Bold.ttf
         - weight: 700
   # fonts:

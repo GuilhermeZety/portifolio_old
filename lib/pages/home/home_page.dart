@@ -4,20 +4,21 @@
 import 'dart:async';
 import 'dart:html' as html;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:portifolio/components/custom_drawer.dart';
 import 'package:portifolio/components/tab_bar_icons.dart';
-import 'package:portifolio/components/tab_bar.dart';
 import 'package:portifolio/pages/home/widgets/sections/FirstSection.dart';
 import 'package:portifolio/pages/home/widgets/sections/SecondSection.dart';
+import 'package:portifolio/pages/home/widgets/sections/ThirdSection.dart';
 import 'package:portifolio/pages/home/widgets/sections/section.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 import '../../components/navbar/nav_bar.dart';
 import '../../utils/util.dart';
 import 'home_viewmodel.dart';
-import 'widgets/project_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         });
       });
     ///
+    
 
     Timer.run(() async => await controller.onLoad(() => setState(() {})));
     
@@ -84,13 +86,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
-
     return NotificationListener(
       onNotification: (t) => controller.notificationListenerUptations(context, t),
       child: Title(
         color: Colors.white,
         title: 'Portifólio | Guilherme Martins',
         child: Scaffold(            
+            drawer: CustomDrawer(controller: controller.scrollController),
             appBar: NavBar(height: 70, controller: controller.scrollController, aboutIsActive: controller.aboutIsActive, habilitiesIsActive: controller.habilitiesIsActive, homeIsActive: controller.homeIsActive, experienceIsActive: controller.experienceIsActive),
             body: SafeArea(
               child: WebSmoothScroll(
@@ -159,120 +161,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                           //Second Section - Sobre
                           SecondSection(controller: controller),
                           //Third Section - Experiencia
-                          Section(
-                            durationOpacity: const Duration(seconds: 1),
-                            opacity: controller.thirdSectionVisibility ? 1 : 0,
-                            child: Column(
-                              children: [
-                                //Experience
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: isLandscape(context) ? ( w > 950 ?  300  : 0 ) : 0,
-                                      child: Image.asset('assets/gifs/holding_cat.gif'),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 90),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          const SelectionArea(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(bottom: 20),
-                                              child: Text('EXPERIÊNCIA', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
-                                            ),
-                                          ),
-                                          TabBarText(
-                                            width: isLandscape(context) ? w > 950 ? (w * 0.95) - 300 :  (w * 0.95) : (w * 0.95),
-                                            constraints: const BoxConstraints(
-                                              maxWidth: 1200 - 300
-                                            ),
-                                            tabWidth: 100 + (w * 0.05),
-                                            height: 300,
-                                            tabs: const [
-                                              '👀👀',
-                                              'Flutter Developer',
-                                              'Junior Full Stack'
-                                            ],
-                                            items: const [
-                                              TabModel(
-                                                title: 'Sempre aberto a novas experiências e desafios',
-                                                date: '😺',
-                                                highlightedText: 'Quem sabe na sua empresa? 👀',
-                                                content: 'Estou disponível para bater um papo, você pode entrar em contato via e-mail guilherme.zety@outlook.com ✨',
-                                              ),
-                                              TabModel(
-                                                title: 'Desenvolvedor Flutter',
-                                                date: 'Dez 2021 - Atual',
-                                                highlightedText: 'Desenvolvimento Apps e Websites',
-                                                content: 'Minha primeira oportunidade na área da tecnologia, sendo o projeto um aplicativo (porém feito em ReactJS) para empresas (localizadas em Orlando - FL) que fornecem locação de casas/apartamentos, sendo desenvolvido totalmente pensado na responsividade. Sou responsável pelo front-end da aplicação, assim como integração com o backend. Utiliza SCRUM como metodologia ágil, juntamente com Trello. Projeto encaminhando para a fase final de desenvolvimento.',
-                                              ),
-                                              TabModel(
-                                                title: 'Junior Full Stack',
-                                                date: 'Mar 2021 - Dez 2021',
-                                                highlightedText: 'Desenvolvimento Apps e Websites',
-                                                content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                                              ),
-                                            ], 
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ]
-                                ),
-                                //Projects
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [                            
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 20),
-                                      child: SelectableText('PROJETOS', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children:  [
-                                        ProjectWidget(
-                                          width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 : 300 : 0,
-                                          title: 'Portifólio Pessoal',
-                                          content: 'Projeto desenvolvido a partir do curso de JavaScript ES6+ completo da Origamid, para por em prática meus estudos iniciais de JS.',
-                                          languages: 'Flutter & Dart',
-                                          imageAsset: 'assets/images/Portifolio.png',
-                                        ),
-                                        ProjectWidget(
-                                          width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 :  300 : 0,
-                                          title: 'RpGaming (Em Desenvolvimento)',
-                                          content: 'Projeto desenvolvido a partir do curso de JavaScript ES6+ completo da Origamid, para por em prática meus estudos iniciais de JS.',
-                                          languages: 'Flutter & Dart',
-                                          imageAsset: 'assets/images/RpGaming.png',
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children:   [
-                                        ProjectWidget(
-                                          width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 : 300 : 0,
-                                          title: 'App Gestão Financeira (Em Breve)',
-                                          content: 'Projeto futuro, um app simples, para no meu caso, gerir as contas e emprestimos de dinheiro em minha familia :), tanto quanto fazer pagamentos e ver saldos e afins ',
-                                          languages: 'Flutter & Dart',
-                                          imageAsset: 'assets/images/EmBreve.png',
-                                        ),
-                                        ProjectWidget(
-                                          width: isLandscape(context) ? w > 800 ? w * 0.1 + 300 : 300 : 0,
-                                          title: 'Em Breve',
-                                          content: 'Estou sempre estudando, consequentemente milhares de projetos vem em mente, tenho uma vasta lista aqui, porém não vale a pena entrar em muitos detalhes por aqui :)',
-                                          languages: 'Flutter & Dart',
-                                          imageAsset: 'assets/images/EmBreve.png',
-                                        ),
-                                      ],
-                                    )
-                                  ]
-                                )
-                              ],
-                            )
-                          ),                    
+                          ThirdSection(controller: controller),             
                           //Fourth Section - Habilidades
                           Section(
                             height: 400,
@@ -293,22 +182,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       TabBarIcons(
-                                        width: isLandscape(context) ? ( w > 950 ?  (w * 0.95) - 250 : (w * 0.95) ) : 0 ,
+                                        width: isLandscape(context) ? ( w > 950 ?  (w * 0.95) - 250 : (w * 0.95) ) : (w * 0.95) ,
                                         constraints: const BoxConstraints(
                                           maxWidth: 1200 - 300
                                         ),
                                         tabWidth: 200 + (w * 0.05),
-                                        height: 300,
+                                        height: 310,
                                         tabs: [
                                           SvgPicture.asset('assets/svg/flutter.svg'),
                                           SvgPicture.asset('assets/svg/dart.svg'),
                                           SvgPicture.asset('assets/svg/firebase.svg'),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
+                                          Container(
+                                            padding: isLandscape(context) ? const EdgeInsets.all(10.0) : null,
                                             child: Image.asset('assets/images/database.png'),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
+                                          Container(
+                                            padding: isLandscape(context) ? const EdgeInsets.all(10.0) : null,
                                             child: Image.asset('assets/images/design.png'),
                                           ),
                                           SvgPicture.asset('assets/svg/git.svg'),
@@ -316,27 +205,27 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                                         items: const [
                                           TabModelIcons(
                                             title: 'Flutter',
-                                            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                            content: 'Framework cross-platform bem completo e versátil, confesso que no começo demorei um pouco para entender o core do framework, mas após ver o quão completo e versátil foi uma paixão na certa;',
                                           ),
                                           TabModelIcons(
                                             title: 'Dart',
-                                            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                            content: 'Linguagem fortemente tipada, sendo bem rigorosa em muitos aspéctos e muito completa; O fato de que permite que o código criado rode tanto no lado do cliente quanto no servidor, e sendo possivel com o mesmo código rodar em Desktop/Web/Mobile é um grande forte;',
                                           ),
                                           TabModelIcons(
                                             title: 'Firebase/Outros',
-                                            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                            content: 'Firebase e Outros como Supabase e afins, é um grande auxiliar do desenvolvimento web como mobile por sua facilidade e ferramentas que possui como databases e autenticação oAuth bem facilitados; ',
                                           ),
                                           TabModelIcons(
                                             title: 'Databases',
-                                            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                            content: 'Databases como MySql/Sqlite/MongoDB/GraphQL muito utilizadas em diversos processos de armazenagem de dados, sendo a SqLite a mais utilizada no cenário Mobile;',
                                           ),
                                           TabModelIcons(
                                             title: 'Design UX/UI',
-                                            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                            content: 'O que seria da aplicação ou website sem um bom design e uma interface de fácil acesso. A Satisfação do cliente e usuários ao resultado final muitas vezes é relacionada em como sua inteface interfere em sua usabilidade;',
                                           ),
                                           TabModelIcons(
                                             title: 'Versionamento',
-                                            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                            content: 'Ferramentas de versionamento como Git é muito importante em projetos mediante de varios desenvolvedores, onde garante total segurança da perca dos códigos e alterações feitas e também ajuda na final organização do mesmo;'
                                           ),
                                         ], 
                                       ),
@@ -355,26 +244,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                           ),
                           //Footer
                           Section(
-                            height: 50,
                             backgroundColor: Theme.of(context).scaffoldBackgroundColor,                      
                             durationOpacity: const Duration(seconds: 1),
                             opacity: 1,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Text.rich(
+                                TextSpan(                                
+                                  style: TextStyle(color: Theme.of(context).secondaryHeaderColor, fontSize: 16),
                                   children: [
-                                    const Text('Desenvolvido com muito ❤ por ', style: TextStyle(fontSize: 18)),
-                                    InkWell(
-                                      onTap: () => html.window.open('https://www.linkedin.com/in/guilherme-m-l-martins/', '_blank'),
-                                      child: Text('Guilherme Martins', style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 18))
+                                    const TextSpan(
+                                      text: 'Desenvolvido com muito ❤ por ', style: TextStyle(fontSize: 18)
                                     ),
-                                  ],
-                                )
-                              ],
+                                    TextSpan(
+                                      text: 'Guilherme Martins', style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 18),
+                                      recognizer: TapGestureRecognizer()..onTap = () => html.window.open('https://www.linkedin.com/in/guilherme-m-l-martins/', '_blank'),
+                                    ),
+                                  ]
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),                  
                         ],

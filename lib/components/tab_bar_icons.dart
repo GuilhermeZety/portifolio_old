@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:portifolio/utils/util.dart';
 
 class TabBarIcons extends StatefulWidget {
   const TabBarIcons({
@@ -103,7 +105,9 @@ class _TabBarIconsState extends State<TabBarIcons> with SingleTickerProviderStat
       decoration: const BoxDecoration(
         // color: Colors.green
       ),
-      child: Row(
+      child: 
+      isLandscape(context) ?
+      Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
@@ -170,12 +174,81 @@ class _TabBarIconsState extends State<TabBarIcons> with SingleTickerProviderStat
             ],
           )
         ],
+      )
+      :
+      Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width * 0.95,
+            height: 100,
+            padding: const EdgeInsets.all(5),
+            child: GridView.count(
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              crossAxisCount: 6,
+              childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 2),
+              children: List.generate(widget.tabs.length, 
+                (index) {                  
+                  return GestureDetector(
+                    onTap: () async => await selectTab(index),
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    onHover: (event) {
+                      setState(() {
+                        boolsHasHoved[index] = true;
+                      });
+                    },
+                    onExit: (event) {
+                      if(index != indexSelected){
+                        setState(() {
+                          boolsHasHoved[index] = false;
+                        });
+                      }
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 100),
+                      padding: const EdgeInsets.all(2),
+                      alignment: Alignment.center,
+                      decoration:  BoxDecoration(
+                        color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
+                        border: Border(bottom: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        child: widget.tabs[index],
+                      ),
+                    ),
+                  ),
+                );
+                }
+              )
+            )            
+          ),
+          Column(
+            children: [
+              AnimatedOpacity(
+                opacity: changing ? 0 : 1,
+                duration: const Duration(milliseconds: 50),
+                child: Transform.translate(
+                  offset: Offset(animation != null ? animation!.value : 0, 0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    constraints: widget.constraints.copyWith(
+                      maxWidth: 1200 - widget.tabWidth - 50 - 300
+                    ),
+                    child: widget.items[indexSelected],
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
 
     );
   }
 }
-
 
 class TabModelIcons extends StatelessWidget {
   const TabModelIcons({
@@ -189,13 +262,15 @@ class TabModelIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-        const SizedBox(height: 20),
-        Text(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
-      ],
+    return SelectionArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+          const SizedBox(height: 20),
+          Text(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
+        ],
+      ),
     );
   }
 }

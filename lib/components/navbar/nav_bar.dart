@@ -78,7 +78,7 @@ class _NavBarState extends State<NavBar> {
                         }, isActive: widget.habilitiesIsActive,),
                       ],
                     ): 
-                    IconButton(onPressed: () => {}, icon: const Icon(Icons.menu))
+                    IconButton(onPressed: () => Scaffold.of(context).openDrawer(), icon: const Icon(Icons.menu))
                 ],
               ),
             ),

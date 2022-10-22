@@ -12,6 +12,10 @@ ThemeData CustomTheme = ThemeData(
       contentTextStyle: TextStyle(color: Color(0xFF2D3140)),
       elevation: 7,
     ),    
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: Color(0xFF121414),
+      elevation: 3,
+    ),
     primaryColor: const Color(0xFF575ddb),
     secondaryHeaderColor: const Color(0xFFC1C1C1),
     canvasColor: const Color(0xFFAAAAAA),

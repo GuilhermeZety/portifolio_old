@@ -231,7 +231,7 @@ abstract class _HomeViewModel with Store {
       ///
 
       ///SETANDO FOURTH SECTION
-        if(o >= (h * 0.7) + 1700){       
+        if(o >= (h * 0.7) + 2000){       
           initFouthSectionAnimation();  
           setFourthSectionVisibility(true);
         }
