@@ -59,6 +59,7 @@ class _ThirdSectionState extends State<ThirdSection> {
                         TabModel(
                           title: 'Sempre aberto a novas experiências e desafios',
                           date: '😺',
+                          enterprise: '',
                           highlightedText: 'Quem sabe na sua empresa? 👀',
                           content: 'Estou disponível para bater um papo, você pode entrar em contato via e-mail guilherme.zety@outlook.com ✨',
                           keywords: 'Never Stop to Learning🚀',
@@ -66,6 +67,7 @@ class _ThirdSectionState extends State<ThirdSection> {
                         TabModel(
                           title: 'Desenvolvedor Flutter',
                           date: 'Dez 2021 - Atual',
+                          enterprise: 'Rz Sistemas',
                           highlightedText: 'Desenvolvimento Apps e Websites',
                           content: 'Como um novo desafio, acabei migrando para o flutter para o desenvolvimento de um app de vendas linkado ao "Virtual Market", '
                           'a aplicação foi totalmente desenvolvida com o modelo Offline-First sendo possivel fazer compras de qualquer lugar do planeta sem acesso à internet.'
@@ -76,6 +78,7 @@ class _ThirdSectionState extends State<ThirdSection> {
                         TabModel(
                           title: 'Junior Full Stack',
                           date: 'Mar 2021 - Dez 2021',
+                          enterprise: 'Rz Sistemas',
                           highlightedText: 'Desenvolvimento Websites',
                           content: 'Minha primeira oportunidade na área de programação, trabalhando ' 
                           ' na manutenção e finalização de um "Software para força de vendas com e-commerce B2B/B2C" chamado "Virtual Market". '

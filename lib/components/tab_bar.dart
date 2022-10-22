@@ -246,6 +246,7 @@ class TabModel extends StatelessWidget {
   const TabModel({
     required this.title,
     required this.date,
+    required this.enterprise,
     required this.highlightedText,
     required this.content,
     required this.keywords,
@@ -254,6 +255,7 @@ class TabModel extends StatelessWidget {
 
   final String title;
   final String date;
+  final String enterprise;
   final String highlightedText;
   final String content;
   final String keywords;
@@ -274,7 +276,13 @@ class TabModel extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text(highlightedText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(highlightedText, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
+              Text(enterprise, style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
+            ],
+          ),
           const SizedBox(height: 20),
           Text(content, style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
           const SizedBox(height: 10),

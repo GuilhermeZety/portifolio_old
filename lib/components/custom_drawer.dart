@@ -17,20 +17,34 @@ class CustomDrawer extends StatelessWidget {
           ItemDrawer(
             isActive: controller.offset >= 0 && controller.offset < MediaQuery.of(context).size.height * 0.78 + 40, 
             name: 'Home', 
-            ontap: () => controller.animateTo(0, duration: const Duration(milliseconds: 200), curve: Curves.linear)
+            ontap: () {
+              controller.animateTo(0, duration: const Duration(milliseconds: 200), curve: Curves.linear);
+              Scaffold.of(context).closeDrawer();
+            }
           ),
           ItemDrawer(
             isActive: controller.offset >= MediaQuery.of(context).size.height * 0.78 + 40 && controller.offset < (MediaQuery.of(context).size.height * 0.78 + 40) + 500, 
             name: 'Sobre', 
-            ontap: () => controller.animateTo(MediaQuery.of(context).size.height * 0.78 + 40, duration: const Duration(milliseconds: 200), curve: Curves.linear)
+            ontap: () {
+              controller.animateTo(MediaQuery.of(context).size.height * 0.78 + 40, duration: const Duration(milliseconds: 200), curve: Curves.linear);
+              Scaffold.of(context).closeDrawer();
+            }
           ),
           ItemDrawer(
             isActive: controller.offset >= (MediaQuery.of(context).size.height * 0.78 + 40) + 500 && controller.offset < (MediaQuery.of(context).size.height * 0.78 + 40) + 3500, 
-            name: 'Experiência', ontap: () => controller.animateTo((MediaQuery.of(context).size.height * 0.78 + 40) + 500, duration: const Duration(milliseconds: 200), curve: Curves.linear)
+            name: 'Experiência', 
+            ontap: () {
+              controller.animateTo((MediaQuery.of(context).size.height * 0.78 + 40) + 500, duration: const Duration(milliseconds: 200), curve: Curves.linear);
+              Scaffold.of(context).closeDrawer();
+            }
           ),
           ItemDrawer(
             isActive: controller.offset >= (MediaQuery.of(context).size.height * 0.78 + 40) + 3500, 
-            name: 'Habilidades', ontap: () => controller.animateTo((MediaQuery.of(context).size.height * 0.78 + 40) + 4500, duration: const Duration(milliseconds: 200), curve: Curves.linear)
+            name: 'Habilidades', 
+            ontap: () {
+              controller.animateTo((MediaQuery.of(context).size.height * 0.78 + 40) + 4500, duration: const Duration(milliseconds: 200), curve: Curves.linear);
+              Scaffold.of(context).closeDrawer();
+            }
           ),
         ],
       ),
