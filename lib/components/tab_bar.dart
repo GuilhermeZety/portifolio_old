@@ -171,7 +171,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
     :
     SizedBox(
       width: MediaQuery.of(context).size.width * 0.95,
-      height: 550,
+      height: 475,
       child: Column(
         children: [
           Container(
@@ -179,7 +179,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
             padding: const EdgeInsets.all(5),
             child: GridView.count(
               childAspectRatio: MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height / 4),
+                      (MediaQuery.of(context).size.height / 3.5),
               crossAxisCount: 3,              
               children: List.generate(widget.tabs.length, 
                 (index) {
@@ -207,7 +207,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
                           color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
                           border: Border(top: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
                         ),
-                        child: Text(widget.tabs[index], style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2),),
+                        child: Text(widget.tabs[index], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, letterSpacing: 2),),
                       ),
                     ),
                   );

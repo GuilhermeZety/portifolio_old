@@ -10,6 +10,7 @@ class ProjectWidget extends StatefulWidget {
   const ProjectWidget({
     super.key,
     required this.width,
+    this.height = 700,
     required this.title,
     required this.content,
     required this.languages,
@@ -20,6 +21,7 @@ class ProjectWidget extends StatefulWidget {
   
   });
   final double width;
+  final double height;
   final String title;
   final String content;
   final String languages;
@@ -62,9 +64,9 @@ class _ProjectWidgetState extends State<ProjectWidget> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Container(
       width: widget.width, 
-      constraints: const BoxConstraints(
+      constraints: BoxConstraints(
         maxWidth: 550,
-        maxHeight: 700
+        minHeight: widget.height
       ),
       padding: const EdgeInsets.all(10),
       child: Column(

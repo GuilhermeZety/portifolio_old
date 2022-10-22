@@ -162,6 +162,7 @@ class _ThirdSectionState extends State<ThirdSection> {
               ),
               ProjectWidget(
                 width: w * 0.95,
+                height: 560 + w * 0.15,
                 title: 'Portifólio Pessoal',
                 content: 'Projeto desenvolvido a partir do curso de JavaScript ES6+ completo da Origamid, para por em prática meus estudos iniciais de JS.',
                 languages: 'Flutter & Dart',
@@ -171,6 +172,7 @@ class _ThirdSectionState extends State<ThirdSection> {
               ),
               ProjectWidget(
                 width: w * 0.95,
+                height: 600 + w * 0.15 ,
                 title: 'Star Wars App',
                 content: 'Projeto simples porém bem completinho sendo totalmente offline apartir do primeiro acesso, com troca de linguagem e tema :); O app consome uma api REST ja existente com todas as informações dos personagens do Star Wars :) sendo filmes, informações, naves e outros; ',
                 languages: 'Flutter & Dart',
@@ -181,6 +183,7 @@ class _ThirdSectionState extends State<ThirdSection> {
               ),            
               ProjectWidget(
                 width: w * 0.95,
+                height: 520 + w * 0.15,
                 title: 'RpGaming (Em Desenvolvimento)',
                 content: 'Projetinho em desenvolvimento, será um app/site para a gestão completa de um rpg de mesa, sendo desde as partes das fichas até a parte emocionante das batalhas :).',
                 languages: 'Flutter & Dart',
@@ -189,6 +192,7 @@ class _ThirdSectionState extends State<ThirdSection> {
               ),
               ProjectWidget(
                 width: w * 0.95,
+                height: 520 + w * 0.15,
                 title: 'Em Breve',
                 content: 'Estou sempre estudando, consequentemente milhares de projetos vem em mente, tenho uma vasta lista aqui, porém não vale a pena entrar em muitos detalhes por aqui :)',
                 languages: 'Flutter & Dart',
