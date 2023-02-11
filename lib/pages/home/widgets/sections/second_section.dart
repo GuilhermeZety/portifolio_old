@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portifolio/pages/home/widgets/sections/section.dart';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
-import '../../../../components/buttons/button_outlined.dart';
-import '../../../../utils/util.dart';
-import '../../home_viewmodel.dart';
+import 'package:portifolio/components/buttons/button_outlined.dart';
+import 'package:portifolio/utils/util.dart';
+import 'package:portifolio/pages/home/home_viewmodel.dart';
 
 class SecondSection extends StatefulWidget {
   const SecondSection({super.key, required this.controller});
@@ -32,7 +33,7 @@ class _SecondSectionState extends State<SecondSection> {
     return isLandscape(context) ? 
       Section(
         height: 500,
-        backgroundColor: Theme.of(context).backgroundColor,                      
+        backgroundColor: Theme.of(context).colorScheme.background,                      
         durationOpacity: const Duration(seconds: 1),
         opacity: controller.secondSectionVisibility ? 1 : 0,
         child: Row(
@@ -67,7 +68,7 @@ class _SecondSectionState extends State<SecondSection> {
                           width: w > 800 ? 300 : 230,
                           height: w > 800 ? 300 : 230,
                           decoration: BoxDecoration(
-                            border: Border(top: BorderSide(color: Theme.of(context).backgroundColor, width: 6), left: BorderSide(color: Theme.of(context).backgroundColor, width: 6))
+                            border: Border(top: BorderSide(color: Theme.of(context).colorScheme.background, width: 6), left: BorderSide(color: Theme.of(context).colorScheme.background, width: 6))
                           ), 
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
@@ -181,7 +182,7 @@ class _SecondSectionState extends State<SecondSection> {
     :
     Section(
       height: 500,
-      backgroundColor: Theme.of(context).backgroundColor,                      
+      backgroundColor: Theme.of(context).colorScheme.background,                      
       durationOpacity: const Duration(seconds: 1),
       opacity: controller.secondSectionVisibility ? 1 : 0,
       child: Row(

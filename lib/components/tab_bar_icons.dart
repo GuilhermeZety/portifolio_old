@@ -53,7 +53,7 @@ class _TabBarIconsState extends State<TabBarIcons> with SingleTickerProviderStat
     }
   }
 
-  selectTab(index) async {
+  Future<void> selectTab(index) async {
     if(index != indexSelected){
       setState(() {
         changing = true;
@@ -71,11 +71,10 @@ class _TabBarIconsState extends State<TabBarIcons> with SingleTickerProviderStat
       await controller.forward();
 
       clearHooves();
-      
     }
   }
 
-  clearHooves(){
+  void clearHooves(){
     for(var i = 0; i < boolsHasHoved.length; i++){
       if(i != indexSelected){
         setState(() {
@@ -140,7 +139,7 @@ class _TabBarIconsState extends State<TabBarIcons> with SingleTickerProviderStat
                       padding: const EdgeInsets.all(2),
                       alignment: Alignment.center,
                       decoration:  BoxDecoration(
-                        color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
+                        color: boolsHasHoved[index] ? Theme.of(context).colorScheme.background : null,
                         border: Border(bottom: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
                       ),
                       child: Container(
@@ -211,7 +210,7 @@ class _TabBarIconsState extends State<TabBarIcons> with SingleTickerProviderStat
                       padding: const EdgeInsets.all(2),
                       alignment: Alignment.center,
                       decoration:  BoxDecoration(
-                        color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
+                        color: boolsHasHoved[index] ? Theme.of(context).colorScheme.background : null,
                         border: Border(bottom: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
                       ),
                       child: Container(

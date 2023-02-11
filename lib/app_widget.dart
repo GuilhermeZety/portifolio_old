@@ -10,7 +10,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:portifolio/pages/home/home_page.dart';
 
-import 'styles/custom_theme.dart';
+import 'package:portifolio/styles/custom_theme.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

@@ -7,8 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portifolio/pages/home/widgets/sections/section.dart';
 import 'package:portifolio/utils/util.dart';
 
-import '../../../../components/buttons/button_outlined.dart';
-import '../../home_viewmodel.dart';
+import 'package:portifolio/components/buttons/button_outlined.dart';
+import 'package:portifolio/pages/home/home_viewmodel.dart';
 
 
 class FirstSection extends StatefulWidget {

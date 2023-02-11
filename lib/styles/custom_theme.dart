@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../utils/util.dart';
+import 'package:portifolio/utils/util.dart';
 
 ThemeData CustomTheme = ThemeData(
    snackBarTheme: const SnackBarThemeData(
@@ -18,20 +18,18 @@ ThemeData CustomTheme = ThemeData(
     ),
     primaryColor: const Color(0xFF575ddb),
     secondaryHeaderColor: const Color(0xFFC1C1C1),
-    canvasColor: const Color(0xFFAAAAAA),
-    backgroundColor: const Color(0xFF161818),     
+    canvasColor: const Color(0xFFAAAAAA),     
     cardColor: const Color(0xFF20203F),          
-    scaffoldBackgroundColor: const Color(0xFF121414),        
-    primarySwatch: createMaterialColor(const Color(0xFF666CDE)),         
+    scaffoldBackgroundColor: const Color(0xFF121414),         
     // cardColor: const Color(0xFFAAAAAA),
     unselectedWidgetColor:const Color(0xFFD6D6D6),
     brightness: Brightness.dark,
     textTheme: const TextTheme(
-      headline1: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
-      headline2: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
-      bodyText2: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
-      subtitle1: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
+      displayLarge: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
+      displayMedium: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
+      bodyMedium: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
+      titleMedium: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
     ),
     fontFamily: 'Sahitya',
-    iconTheme: const IconThemeData(color: Colors.white)
+    iconTheme: const IconThemeData(color: Colors.white), colorScheme: ColorScheme.fromSwatch(primarySwatch: createMaterialColor(const Color(0xFF666CDE))).copyWith(background: const Color(0xFF161818))
   );

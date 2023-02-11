@@ -10,15 +10,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portifolio/components/custom_drawer.dart';
 import 'package:portifolio/components/tab_bar_icons.dart';
-import 'package:portifolio/pages/home/widgets/sections/FirstSection.dart';
-import 'package:portifolio/pages/home/widgets/sections/SecondSection.dart';
-import 'package:portifolio/pages/home/widgets/sections/ThirdSection.dart';
+import 'package:portifolio/pages/home/widgets/sections/first_section.dart';
+import 'package:portifolio/pages/home/widgets/sections/second_section.dart';
+import 'package:portifolio/pages/home/widgets/sections/third_section.dart';
 import 'package:portifolio/pages/home/widgets/sections/section.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
-import '../../components/navbar/nav_bar.dart';
-import '../../utils/util.dart';
-import 'home_viewmodel.dart';
+import 'package:portifolio/components/navbar/nav_bar.dart';
+import 'package:portifolio/utils/util.dart';
+import 'package:portifolio/pages/home/home_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                           //Fourth Section - Habilidades
                           Section(
                             height: 400,
-                            backgroundColor: Theme.of(context).backgroundColor,                      
+                            backgroundColor: Theme.of(context).colorScheme.background,                      
                             durationOpacity: const Duration(seconds: 1),
                             opacity: controller.fourthSectionVisibility ? 1 : 0,
                             child: Transform.translate(

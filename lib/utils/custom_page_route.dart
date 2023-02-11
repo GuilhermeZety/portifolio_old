@@ -24,7 +24,7 @@ class CustomPageRouteDirections extends PageRouteBuilder{
       child: child
     );
 }
-getBeginPosition(direction){
+Offset getBeginPosition(AxisDirection direction){
   switch (direction) {
     case AxisDirection.up:
       return const Offset(0, 1);

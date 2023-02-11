@@ -67,7 +67,7 @@ void showToast({
   );
 }
 
-showSuccessToast({required String message, required FToast fToast, Duration? duration}){
+void showSuccessToast({required String message, required FToast fToast, Duration? duration}) {
   showToast(
     fToast: fToast, 
     title: 'Sucesso!',

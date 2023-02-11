@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../utils/toasts.dart';
+import 'package:portifolio/utils/toasts.dart';
 
 part 'home_viewmodel.g.dart';
 
@@ -142,7 +142,7 @@ abstract class _HomeViewModel with Store {
     Color colorArrowContinue = Colors.grey.shade300;
   ///
 
-  onLoad(setS) async {    
+  Future<void> onLoad(setS) async {    
     await addAllAnimations(setS);
 
     await Future.delayed(const Duration(milliseconds: 500));
@@ -152,7 +152,7 @@ abstract class _HomeViewModel with Store {
     initFirstSectionAnimation();
   }
 
-  addAllAnimations(setS) async {
+  Future<void> addAllAnimations(setS) async {
     setFirstSectionAnimationL(Tween(begin: -50.0, end: 0.0).animate(firstSectionAnimationController)..addListener(setS));
     setFirstSectionAnimationR(Tween(begin: 80.0, end: 40.0).animate(firstSectionAnimationController)..addListener(setS));
     setFirstSectionAnimationRB(Tween(begin: 40.0, end: 0.0).animate(firstSectionAnimationController)..addListener(setS));
@@ -164,15 +164,15 @@ abstract class _HomeViewModel with Store {
     setFourthSectionAnimationB(Tween(begin: 10.0, end: 0.0).animate(fourthSectionAnimationController)..addListener(setS));
   }
 
-  initFirstSectionAnimation() async  {
+  Future<void> initFirstSectionAnimation() async  {
     await firstSectionAnimationController.forward();
   }
 
-  initSecondSectionAnimation() async {
+  Future<void> initSecondSectionAnimation() async {
     await secondSectionAnimationController.forward();
   }
   
-  initFouthSectionAnimation() async {
+  Future<void> initFouthSectionAnimation() async {
     await fourthSectionAnimationController.forward();
   }
 
@@ -252,8 +252,8 @@ abstract class _HomeViewModel with Store {
   }
 
 
-  copyEmail(context){
-    Clipboard.setData(const ClipboardData(text: "guilherme.zety@outlook.com"));
+  void copyEmail(context){
+    Clipboard.setData(const ClipboardData(text: 'guilherme.zety@outlook.com'));
 
     showSuccessToast(message: 'E-mail copiado com sucesso', fToast: FToast().init(context));
   }

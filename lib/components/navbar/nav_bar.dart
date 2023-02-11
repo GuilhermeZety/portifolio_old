@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../utils/util.dart';
+import 'package:portifolio/utils/util.dart';
 
-import 'item_menu.dart';
-import 'logo.dart';
+import 'package:portifolio/components/navbar/item_menu.dart';
+import 'package:portifolio/components/navbar/logo.dart';
 
 class NavBar extends StatefulWidget with PreferredSizeWidget{
   const NavBar({
@@ -43,7 +43,7 @@ class _NavBarState extends State<NavBar> {
         width: widget.width,
         decoration: BoxDecoration(
           border: const Border(bottom: BorderSide(color: Color(0xFF29292E), width: 1)),
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

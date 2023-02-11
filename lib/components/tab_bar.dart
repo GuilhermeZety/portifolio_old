@@ -55,7 +55,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
     }
   }
 
-  selectTab(index) async {
+  Future<void> selectTab(index) async {
     if(index != indexSelected){
       boolsHasHoved[index] = true;
       changing = true;
@@ -73,7 +73,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
     }
   }
 
-  clearHooves(){
+  void clearHooves(){
     for(var i = 0; i < boolsHasHoved.length; i++){
       if(i != indexSelected){
         setState(() {
@@ -135,7 +135,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
                       padding: const EdgeInsets.all(10),
                       alignment: Alignment.center,
                       decoration:  BoxDecoration(
-                        color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
+                        color: boolsHasHoved[index] ? Theme.of(context).colorScheme.background : null,
                         border: Border(left: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
                       ),
                       child: Text(widget.tabs[index], style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2),),
@@ -204,7 +204,7 @@ class _TabBarTextState extends State<TabBarText> with SingleTickerProviderStateM
                         padding: const EdgeInsets.all(10),
                         alignment: Alignment.center,
                         decoration:  BoxDecoration(
-                          color: boolsHasHoved[index] ? Theme.of(context).backgroundColor : null,
+                          color: boolsHasHoved[index] ? Theme.of(context).colorScheme.background : null,
                           border: Border(top: BorderSide(color: boolsHasHoved[index] ? Theme.of(context).primaryColor : const Color(0xFF272727), width: 2) )
                         ),
                         child: Text(widget.tabs[index], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, letterSpacing: 2),),

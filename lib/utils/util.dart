@@ -24,10 +24,10 @@ Orientation getWhatSize(BuildContext c){
   return MediaQuery.of(c).orientation;
 }
 
-isPortrait(BuildContext context){
+bool isPortrait(BuildContext context){
   return MediaQuery.of(context).orientation == Orientation.portrait;
 }
 
-isLandscape(BuildContext context){
+bool isLandscape(BuildContext context){
   return MediaQuery.of(context).orientation == Orientation.landscape;
 }

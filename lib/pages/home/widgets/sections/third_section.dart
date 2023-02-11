@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:portifolio/pages/home/widgets/sections/section.dart';
 
-import '../../../../components/tab_bar.dart';
-import '../../../../utils/util.dart';
-import '../../home_viewmodel.dart';
-import '../project_widget.dart';
+import 'package:portifolio/components/tab_bar.dart';
+import 'package:portifolio/utils/util.dart';
+import 'package:portifolio/pages/home/home_viewmodel.dart';
+import 'package:portifolio/pages/home/widgets/project_widget.dart';
 
 class ThirdSection extends StatefulWidget {
   const ThirdSection({super.key, required this.controller});
