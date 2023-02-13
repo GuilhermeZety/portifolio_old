@@ -52,6 +52,7 @@ class _ThirdSectionState extends State<ThirdSection> {
                       height: 300,
                       tabs: const [
                         '👀👀',
+                        'Flutter - Pleno',
                         'Flutter Developer',
                         'Junior Full Stack'
                       ],
@@ -65,15 +66,25 @@ class _ThirdSectionState extends State<ThirdSection> {
                           keywords: 'Never Stop to Learning🚀',
                         ),
                         TabModel(
+                          title: 'Desenvolvedor Flutter - Pleno',
+                          date: 'Nov 2022 - Atual',
+                          enterprise: 'W2o Softwares e Aplicativos',
+                          highlightedText: 'Desenvolvimento Apps',
+                          content: 'Gerenciando e comandando equipe de desenvolvimento, implementando padrões de projeto, e novas rotinas de trabalho. '
+                          'juntos, desenvolvemos e aprimoramos tanto as novas quanto as antigas aplicações, usando padrões como Clean Architecture, Solid, TDD, entre outros...'
+                          ,
+                          keywords: 'Flutter, Dart, GetIt, Bloc, Sqlite, Firebase, Agile, Clean Architecture, TDD, SOLID, Git, CI/CD, Scrum, Kanban, Flutter Web',
+                          
+                        ),
+                        TabModel(
                           title: 'Desenvolvedor Flutter',
-                          date: 'Dez 2021 - Atual',
+                          date: 'Dez 2021 - Nov 2022',
                           enterprise: 'Rz Sistemas',
                           highlightedText: 'Desenvolvimento Apps e Websites',
                           content: 'Como um novo desafio, acabei migrando para o flutter para o desenvolvimento de um app de vendas linkado ao "Virtual Market", '
                           'a aplicação foi totalmente desenvolvida com o modelo Offline-First sendo possivel fazer compras de qualquer lugar do planeta sem acesso à internet.'
                           'logo após participei da criação de websites utilizando o flutter;',
                           keywords: 'Flutter, Dart, Provider, Mobx, Sqlite',
-                          
                         ),
                         TabModel(
                           title: 'Junior Full Stack',
@@ -109,7 +120,7 @@ class _ThirdSectionState extends State<ThirdSection> {
                   ProjectWidget(
                     width: w > 800 ? w * 0.1 + 300 : 300,
                     title: 'Portifólio Pessoal',
-                    content: 'Projeto desenvolvido a partir do curso de JavaScript ES6+ completo da Origamid, para por em prática meus estudos iniciais de JS.',
+                    content: 'Totalmente desenvolvido em flutter, usei como apresentacao e também como estudo para novos projetos, atualmente não está atualizado com meus padroes de código, mas logo irei atualizar.',
                     languages: 'Flutter & Dart',
                     imageAsset: 'assets/images/Portifolio.png',
                     linkGithub: 'https://github.com/GuilhermeZety/Portifolio',
@@ -164,7 +175,7 @@ class _ThirdSectionState extends State<ThirdSection> {
                 width: w * 0.95,
                 height: 560 + w * 0.15,
                 title: 'Portifólio Pessoal',
-                content: 'Projeto desenvolvido a partir do curso de JavaScript ES6+ completo da Origamid, para por em prática meus estudos iniciais de JS.',
+                content: 'Totalmente desenvolvido em flutter, usei como apresentacao e também como estudo para novos projetos, atualmente não está atualizado com meus padroes de código, mas logo irei atualizar.',
                 languages: 'Flutter & Dart',
                 imageAsset: 'assets/images/Portifolio.png',
                 linkGithub: 'https://github.com/GuilhermeZety/Portifolio',

@@ -23,7 +23,7 @@ ThemeData CustomTheme = ThemeData(
     scaffoldBackgroundColor: const Color(0xFF121414),         
     // cardColor: const Color(0xFFAAAAAA),
     unselectedWidgetColor:const Color(0xFFD6D6D6),
-    brightness: Brightness.dark,
+    // brightness: Brightness.dark,
     textTheme: const TextTheme(
       displayLarge: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),
       displayMedium: TextStyle(color: Color(0xFFD6D6D6), fontSize: 16),

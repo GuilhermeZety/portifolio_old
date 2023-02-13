@@ -72,7 +72,7 @@ class _SecondSectionState extends State<SecondSection> {
                           ), 
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
-                            child: Image.asset('assets/images/me.jpg')
+                            child: Image.asset('assets/images/me.jpeg')
                           )
                         ),
                       )
